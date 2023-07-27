@@ -224,6 +224,9 @@ export default {
     click(e) {
       this.$emit('dayclick', this.getDayEvent(e));
     },
+    dblClick(e) {
+      this.$emit('dayDbclick', this.getDayEvent(e));
+    },
     mouseenter(e) {
       this.$emit('daymouseenter', this.getDayEvent(e));
     },
@@ -415,6 +418,7 @@ export default {
       this.dayContentEvents = mergeEvents(
         {
           click: this.click,
+          dblclick: this.dblClick,
           mouseenter: this.mouseenter,
           mouseleave: this.mouseleave,
           focusin: this.focusin,

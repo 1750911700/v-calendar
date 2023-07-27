@@ -7,7 +7,7 @@
     <div class="flex flex-col items-center md:flex-row md:justify-around">
       <div class="mb-6">
         <h3 class="text-base semibold text-gray-700 mb-3">Highlights</h3>
-        <v-calendar :attributes="highlights" ref="cal" />
+        <v-calendar :attributes="highlights" ref="cal" @dayDbclick="testDBLClick" @dayclick="dayClick"/>
       </div>
       <div class="mb-6">
         <h3 class="text-base semibold text-gray-700 mb-3">Dots</h3>
@@ -160,7 +160,7 @@
 const PopoverRow = require('@/components/PopoverRow').default;
 const Locale = require('@/utils/locale').default;
 const locale = new Locale();
-
+let isDbClick = true;
 export default {
   components: {
     PopoverRow,
@@ -190,7 +190,7 @@ export default {
     highlights() {
       return [
         {
-          highlight: 'red',
+          highlight: 'green',
           contentStyle: {
             color: 'white',
           },
@@ -362,6 +362,24 @@ export default {
     this.refreshTodos();
   },
   methods: {
+    testDBLClick(e){
+      isDbClick = true
+
+      console.log(e,'testDBLClick');
+      setTimeout(() => {
+        isDbClick = false
+      }, 250);
+    },
+    dayClick(e){
+       // 延迟处理单击事件，等待双击事件是否触发
+        setTimeout(function() {
+          console.log(isDbClick,'dayClick');
+          if(isDbClick) return
+            console.log('你单击了按钮！');
+            // isDbClick = false
+            // 在这里可以添加你希望执行的其他单击事件操作
+        }, 250); // 设置延迟时间，根据实际情况调整
+    },
     refreshMonthData() {
       const { month, year } = locale.getThisMonthComps();
       this.pageForThisMonth = { month, year };
